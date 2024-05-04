@@ -2,16 +2,16 @@
 
 module Docuseal
   URL_CACHE = ActiveSupport::Cache::MemoryStore.new
-  PRODUCT_URL = 'https://www.docuseal.co'
+  PRODUCT_URL = 'https://esign.rmoagency.com'
   NEWSLETTER_URL = "#{PRODUCT_URL}/newsletters".freeze
   ENQUIRIES_URL = "#{PRODUCT_URL}/enquiries".freeze
   PRODUCT_NAME = 'DocuSeal'
   DEFAULT_APP_URL = 'http://localhost:3000'
-  GITHUB_URL = 'https://github.com/docusealco/docuseal'
-  DISCORD_URL = 'https://discord.gg/qygYCDGck9'
-  TWITTER_URL = 'https://twitter.com/docusealco'
-  TWITTER_HANDLE = '@docusealco'
-  SUPPORT_EMAIL = 'support@docuseal.co'
+  GITHUB_URL = 'https://github.com/'
+  DISCORD_URL = 'https://discord.gg/'
+  TWITTER_URL = 'https://twitter.com/'
+  TWITTER_HANDLE = '@softwarehut'
+  SUPPORT_EMAIL = 'support@softwarehut.io'
   HOST = ENV.fetch('HOST', 'localhost')
   CONSOLE_URL = if Rails.env.development?
                   'http://console.localhost.io:3001'
