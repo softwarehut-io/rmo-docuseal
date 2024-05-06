@@ -6,6 +6,7 @@
 #
 #  id          :bigint           not null, primary key
 #  archived_at :datetime
+#  is_public   :boolean          default(FALSE)
 #  name        :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

@@ -17,6 +17,7 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :string
 #  locked_at              :datetime
+#  login_token            :uuid
 #  otp_required_for_login :boolean          default(FALSE), not null
 #  otp_secret             :string
 #  remember_created_at    :datetime

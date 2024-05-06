@@ -7,6 +7,7 @@
 #  id          :bigint           not null, primary key
 #  archived_at :datetime
 #  fields      :text             not null
+#  is_public   :boolean          default(FALSE)
 #  name        :string           not null
 #  schema      :text             not null
 #  slug        :string           not null
