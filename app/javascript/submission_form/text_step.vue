@@ -29,7 +29,7 @@
       v-if="!isTextArea"
       :id="field.uuid"
       v-model="text"
-      :maxlength="cellsMaxLegth"
+      :maxlength="cellsMaxLegth || field.maxlength"
       dir="auto"
       class="base-input !text-2xl w-full"
       :class="{ '!pr-11 -mr-10': !field.validation?.pattern }"

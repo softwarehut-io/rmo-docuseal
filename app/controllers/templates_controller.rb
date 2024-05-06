@@ -38,6 +38,8 @@ class TemplatesController < ApplicationController
         )
       ).to_json
 
+    @user = current_user.to_json
+
     render :edit, layout: 'plain'
   end
 

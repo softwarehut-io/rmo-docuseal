@@ -22,6 +22,18 @@ Rails.application.routes.draw do
     end
   end
 
+  Rails.application.routes.draw do
+    get 'api/generate-link', action: :index, controller: 'api/generate_link'
+  end
+
+  Rails.application.routes.draw do
+    resources :magic_login, only: %i[index new create]
+  end
+
+  Rails.application.routes.draw do
+    post 'api/sign_up', action: :create, controller: 'api/sign_up'
+  end
+
   namespace :api, defaults: { format: :json } do
     resources :attachments, only: %i[create]
     resources :submitter_email_clicks, only: %i[create]

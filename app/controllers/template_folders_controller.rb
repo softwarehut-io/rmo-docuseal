@@ -24,6 +24,6 @@ class TemplateFoldersController < ApplicationController
   private
 
   def template_folder_params
-    params.require(:template_folder).permit(:name)
+    params.require(:template_folder).permit(:name, :is_public)
   end
 end

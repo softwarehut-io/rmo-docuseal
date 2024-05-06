@@ -32,6 +32,11 @@
           name="buttons"
         />
         <template v-else>
+          <div v-if="this.user.role=='admin'">
+            <input type="checkbox" id="checkbox" v-model="template.is_public"  true-value="true"
+            false-value="false"  @update:model-value="onCheckClick" />
+            <label for="checkbox">Make this Public</label>
+          </div>  
           <a
             :href="template.submitters.length > 1 ? `/templates/${template.id}/submissions/new?selfsign=true` : `/d/${template.slug}`"
             class="btn btn-primary btn-ghost text-base hidden md:flex"
@@ -320,6 +325,7 @@ export default {
   provide () {
     return {
       template: this.template,
+      user: this.user,
       save: this.save,
       t: this.t,
       currencies: this.currencies,
@@ -338,6 +344,10 @@ export default {
   },
   props: {
     template: {
+      type: Object,
+      required: true
+    },
+    user: {
       type: Object,
       required: true
     },
@@ -1004,6 +1014,11 @@ export default {
 
       this.save()
     },
+    onCheckClick (value) {
+      this.template.is_public = value
+
+      this.save()
+    },
     updateName (value) {
       this.template.name = value
 
@@ -1148,6 +1163,7 @@ export default {
         body: JSON.stringify({
           template: {
             name: this.template.name,
+            is_public: this.template.is_public,
             schema: this.template.schema,
             submitters: this.template.submitters,
             fields: this.template.fields

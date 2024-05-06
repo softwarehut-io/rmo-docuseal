@@ -44,7 +44,9 @@
 #
 class User < ApplicationRecord
   ROLES = [
-    ADMIN_ROLE = 'admin'
+    ADMIN_ROLE = 'admin',
+    EDITOR_ROLE = 'editor',
+    VIEWER_ROLE = 'viewer'
   ].freeze
 
   EMAIL_REGEXP = /[^@;,<>\s]+@[^@;,<>\s]+/
@@ -66,6 +68,12 @@ class User < ApplicationRecord
 
   scope :active, -> { where(archived_at: nil) }
   scope :admins, -> { where(role: ADMIN_ROLE) }
+
+  def generate_login_token!
+    token = SecureRandom.uuid
+    update_column(:login_token, token)
+    return token
+  end
 
   def access_token
     super || build_access_token.tap(&:save!)
