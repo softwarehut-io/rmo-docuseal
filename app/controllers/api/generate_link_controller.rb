@@ -7,10 +7,10 @@ module Api
       user = User.find_by(email: params[:email])
       token =  user.generate_login_token!
 
-      if user && current_user.role =='admin'
+      if user && (current_user.role =='admin'|| current_user.role =='superadmin')
         render :json => {"magic link"=> "#{Docuseal::DEFAULT_APP_URL}/magic_login/?token=#{token}"
         }
-      elsif current_user.role !='admin'
+      elsif current_user.role !='admin' && current_user.role !='superadmin'
         render :status => 401,
         :json => {:message => 'Not authenticated'}
       else

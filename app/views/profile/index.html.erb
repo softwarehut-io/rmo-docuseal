@@ -22,50 +22,52 @@
       </div>
     <% end %>
     <%= render 'email_configs' %>
-    <p class="text-2xl font-bold mt-8 mb-4">Signature</p>
-    <% signature = UserConfigs.load_signature(current_user) %>
-    <% if signature %>
-      <div class="flex justify-center mb-4 relative">
-        <%= button_to button_title(title: 'Remove', disabled_with: 'Removing'), user_signature_path, method: :delete, class: 'right-0 top-0 absolute link' %>
-        <img src="<%= signature.url %>" style="max-height: 200px; width: auto" width="<%= signature.metadata['width'] %>" height="<%= signature.metadata['height'] %>">
-      </div>
-    <% end %>
-    <a href="<%= edit_user_signature_path %>" data-turbo-frame="modal" class="base-button w-full">Update Signature</a>
-    <% if true_user == current_user && !current_account.testing? %>
-      <p class="text-2xl font-bold mt-8 mb-4">Change Password</p>
-      <%= form_for current_user, url: update_password_settings_profile_index_path, method: :patch, html: { autocomplete: 'off', class: 'space-y-4' } do |f| %>
-        <div class="form-control">
-          <%= f.label :password, 'New password', class: 'label' %>
-          <%= f.password_field :password, autocomplete: 'off', class: 'base-input' %>
-        </div>
-        <div class="form-control">
-          <%= f.label :password_confirmation, 'Confirm new password', class: 'label' %>
-          <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'base-input' %>
-        </div>
-        <div class="form-control pt-2">
-          <%= f.button button_title(title: 'Update', disabled_with: 'Updating'), class: 'base-button' %>
+    <% if current_user.role == 'admin' || current_user.role == 'superadmin' %>
+      <p class="text-2xl font-bold mt-8 mb-4">Signature</p>
+      <% signature = UserConfigs.load_signature(current_user) %>
+      <% if signature %>
+        <div class="flex justify-center mb-4 relative">
+          <%= button_to button_title(title: 'Remove', disabled_with: 'Removing'), user_signature_path, method: :delete, class: 'right-0 top-0 absolute link' %>
+          <img src="<%= signature.url %>" style="max-height: 200px; width: auto" width="<%= signature.metadata['width'] %>" height="<%= signature.metadata['height'] %>">
         </div>
       <% end %>
-      <p class="text-2xl font-bold mt-8 mb-4">Two-Factor Authentication</p>
-      <div class="space-y-4">
-        <% if current_user.otp_required_for_login %>
-          <p class="flex items-center space-x-1">
-            <%= svg_icon('circle_check', class: 'stroke-success inline flex-none w-5 h-5') %>
-            <span>
-              2FA has been configured.
-            </span>
-          </p>
-          <a href="<%= edit_mfa_setup_path %>" data-turbo-frame="modal" class="white-button w-full !px-8">🔓 Remove 2FA</a>
-        <% else %>
-          <p class="flex items-center space-x-1">
-            <%= svg_icon('info_circle', class: 'stroke-warning inline flex-none w-5 h-5') %>
-            <span>
-              2FA is not configured.
-            </span>
-          </p>
-          <a href="<%= new_mfa_setup_path %>" data-turbo-frame="modal" class="base-button w-full !px-8">🔒 Set up 2FA</a>
+      <a href="<%= edit_user_signature_path %>" data-turbo-frame="modal" class="base-button w-full">Update Signature</a>
+      <% if true_user == current_user && !current_account.testing? %>
+        <p class="text-2xl font-bold mt-8 mb-4">Change Password</p>
+        <%= form_for current_user, url: update_password_settings_profile_index_path, method: :patch, html: { autocomplete: 'off', class: 'space-y-4' } do |f| %>
+          <div class="form-control">
+            <%= f.label :password, 'New password', class: 'label' %>
+            <%= f.password_field :password, autocomplete: 'off', class: 'base-input' %>
+          </div>
+          <div class="form-control">
+            <%= f.label :password_confirmation, 'Confirm new password', class: 'label' %>
+            <%= f.password_field :password_confirmation, autocomplete: 'off', class: 'base-input' %>
+          </div>
+          <div class="form-control pt-2">
+            <%= f.button button_title(title: 'Update', disabled_with: 'Updating'), class: 'base-button' %>
+          </div>
         <% end %>
-      </div>
+        <p class="text-2xl font-bold mt-8 mb-4">Two-Factor Authentication</p>
+        <div class="space-y-4">
+          <% if current_user.otp_required_for_login %>
+            <p class="flex items-center space-x-1">
+              <%= svg_icon('circle_check', class: 'stroke-success inline flex-none w-5 h-5') %>
+              <span>
+                2FA has been configured.
+              </span>
+            </p>
+            <a href="<%= edit_mfa_setup_path %>" data-turbo-frame="modal" class="white-button w-full !px-8">🔓 Remove 2FA</a>
+          <% else %>
+            <p class="flex items-center space-x-1">
+              <%= svg_icon('info_circle', class: 'stroke-warning inline flex-none w-5 h-5') %>
+              <span>
+                2FA is not configured.
+              </span>
+            </p>
+            <a href="<%= new_mfa_setup_path %>" data-turbo-frame="modal" class="base-button w-full !px-8">🔒 Set up 2FA</a>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </div>
   <div class="w-0 md:w-52"></div>

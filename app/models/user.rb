@@ -45,6 +45,7 @@
 #
 class User < ApplicationRecord
   ROLES = [
+    SUPER_ADMIN_ROLE = 'superadmin',
     ADMIN_ROLE = 'admin',
     EDITOR_ROLE = 'editor',
     VIEWER_ROLE = 'viewer'

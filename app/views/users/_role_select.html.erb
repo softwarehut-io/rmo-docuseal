@@ -1,6 +1,7 @@
 <div class="form-control">
   <%= f.label :role, class: 'label' %>
   <%= f.select :role, nil, {}, class: 'base-select' do %>
+    <option value="superadmin">Super Admin</option>
     <option value="admin">Admin</option>
     <option value="editor" >Editor</option>
     <option value="viewer" >Viewer</option>

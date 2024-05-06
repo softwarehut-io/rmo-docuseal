@@ -7,60 +7,62 @@
       <li>
         <%= link_to 'Profile', settings_profile_index_path, class: 'text-base hover:bg-base-300' %>
       </li>
-      <li>
-        <%= link_to 'Account', settings_account_path, class: 'text-base hover:bg-base-300' %>
-      </li>
+      <% if  current_user.role == 'superadmin'%>
+        <li>
+          <%= link_to 'Account', settings_account_path, class: 'text-base hover:bg-base-300' %>
+        </li>
+      <% end %>
       <% unless Docuseal.multitenant? %>
-        <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::EMAIL_SMTP_KEY, account: current_account)) && ENV['SMTP_ADDRESS'].blank? &&  true_user == current_user %>
+        <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::EMAIL_SMTP_KEY, account: current_account)) && ENV['SMTP_ADDRESS'].blank? &&  true_user == current_user && current_user.role == 'superadmin' %>
           <li>
             <%= link_to 'Email', settings_email_index_path, class: 'text-base hover:bg-base-300' %>
           </li>
         <% end %>
-        <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::FILES_STORAGE_KEY, account: current_account)) && true_user == current_user %>
+        <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::FILES_STORAGE_KEY, account: current_account)) && true_user == current_user && current_user.role == 'superadmin'  %>
           <li>
             <%= link_to 'Storage', settings_storage_index_path, class: 'text-base hover:bg-base-300' %>
           </li>
         <% end %>
-        <% if can?(:read, EncryptedConfig.new(key: 'submitter_invitation_sms', account: current_account)) && true_user == current_user %>
+        <% if can?(:read, EncryptedConfig.new(key: 'submitter_invitation_sms', account: current_account)) && true_user == current_user && current_user.role == 'superadmin'  %>
           <li>
             <%= link_to 'SMS', settings_sms_path, class: 'text-base hover:bg-base-300' %>
           </li>
         <% end %>
       <% end %>
-      <% if can?(:read, AccountConfig) %>
+      <% if can?(:read, AccountConfig) && (current_user.role=='admin'|| current_user.role == 'superadmin') %>
         <li>
           <%= link_to 'Notifications', settings_notifications_path, class: 'text-base hover:bg-base-300' %>
         </li>
       <% end %>
-      <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::ESIGN_CERTS_KEY, account: current_account)) %>
+      <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::ESIGN_CERTS_KEY, account: current_account)) && current_user.role == 'superadmin'  %>
         <li>
           <%= link_to 'E-Signature', settings_esign_path, class: 'text-base hover:bg-base-300' %>
         </li>
       <% end %>
-      <% if can?(:read, User) %>
+      <% if can?(:read, User) && (current_user.role=='admin'|| current_user.role == 'superadmin') %>
         <li>
           <%= link_to 'Users', settings_users_path, class: 'text-base hover:bg-base-300' %>
         </li>
       <% end %>
-      <% if Docuseal.demo? || !Docuseal.multitenant? %>
+      <% if Docuseal.demo? || !Docuseal.multitenant? && current_user.role == 'superadmin'  %>
         <% if can?(:read, AccessToken) %>
           <li>
             <%= link_to 'API', settings_api_index_path, class: 'text-base hover:bg-base-300' %>
           </li>
         <% end %>
-        <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::WEBHOOK_URL_KEY, account: current_account)) %>
+        <% if can?(:read, EncryptedConfig.new(key: EncryptedConfig::WEBHOOK_URL_KEY, account: current_account)) && current_user.role == 'superadmin'  %>
           <li>
             <%= link_to 'Webhooks', settings_webhooks_path, class: 'text-base hover:bg-base-300' %>
           </li>
         <% end %>
       <% end %>
-      <% if can?(:read, AccountConfig) %>
+      <% if can?(:read, AccountConfig) && (current_user.role=='admin'|| current_user.role == 'superadmin') %>
         <li>
           <%= link_to 'Personalization', settings_personalization_path, class: 'text-base hover:bg-base-300' %>
         </li>
       <% end %>
       <%= render 'shared/settings_nav_extra' %>
-      <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user != true_user || !current_account.testing?) %>
+      <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user != true_user || !current_account.testing?) && current_user.role == 'superadmin'  %>
         <li>
           <%= link_to Docuseal.multitenant? ? console_redirect_index_path(redir: "#{Docuseal::CONSOLE_URL}/plans") : "#{Docuseal::CLOUD_URL}/sign_up?#{{ redir: "#{Docuseal::CONSOLE_URL}/on_premise" }.to_query}", class: 'text-base hover:bg-base-300', data: { prefetch: false } do %>
             Plans
@@ -68,7 +70,7 @@
           <% end %>
         </li>
       <% end %>
-      <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user != true_user || !current_account.testing?) %>
+      <% if !Docuseal.demo? && can?(:manage, EncryptedConfig) && (current_user != true_user || !current_account.testing?) && current_user.role == 'superadmin' %>
         <li>
           <%= link_to Docuseal.multitenant? ? console_redirect_index_path(redir: "#{Docuseal::CONSOLE_URL}/api") : "#{Docuseal::CONSOLE_URL}/on_premise", class: 'text-base hover:bg-base-300', data: { prefetch: false } do %>
             <% if Docuseal.multitenant? %> API <% else %> Console <% end %>

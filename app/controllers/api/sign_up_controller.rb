@@ -5,7 +5,7 @@ module Api
 
 
     def create
-      if current_user.role !='admin'
+      if current_user.role !='admin' && current_user.role !='superadmin'
         render :status => 401,
         :json => {:message => 'Not authenticated'}
         return

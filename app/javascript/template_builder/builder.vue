@@ -32,11 +32,11 @@
           name="buttons"
         />
         <template v-else>
-          <div v-if="this.user.role=='admin'">
+          <div v-if="this.user.role=='admin'||this.user.role=='superadmin'">
             <input type="checkbox" id="checkbox" v-model="template.is_public"  true-value="true"
             false-value="false"  @update:model-value="onCheckClick" />
             <label for="checkbox">Make this Public</label>
-          </div>  
+          </div>     
           <a
             :href="template.submitters.length > 1 ? `/templates/${template.id}/submissions/new?selfsign=true` : `/d/${template.slug}`"
             class="btn btn-primary btn-ghost text-base hidden md:flex"

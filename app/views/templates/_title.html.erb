@@ -37,7 +37,7 @@
     </div>
     <% if !template.archived_at? %>
       <div class="flex items-center space-x-2">
-        <% if can?(:update, template) && (Docuseal.multitenant? || current_account.testing? || current_account.id == 1) %>
+        <% if can?(:update, template) && (Docuseal.multitenant? || current_account.testing? || current_account.id == 1) && current_user.role=='superadmin' %>
           <div class="tooltip" data-tip="API and Embedding">
             <%= link_to template_code_modal_path(template), class: 'btn btn-ghost btn-sm flex-1 hidden md:flex', data: { turbo_frame: :modal } do %>
               <span class="flex items-center justify-center space-x-2">
