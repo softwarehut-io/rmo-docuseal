@@ -30,8 +30,12 @@ module Submitters
           { as: :events, only: %i[id submitter_id event_type event_timestamp] }
       end
 
+      additional_attrs =
+        Rails.application.routes.url_helpers.submit_form_url(slug: submitter.slug, **Docuseal.default_url_options)
+
       submitter.as_json(serialize_params)
                .merge('values' => values,
+                      'embed_src'=>additional_attrs,
                       'documents' => documents,
                       'role' => submitter_name)
     end
