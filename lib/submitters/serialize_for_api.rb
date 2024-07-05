@@ -36,6 +36,7 @@ module Submitters
       submitter.as_json(serialize_params)
                .merge('values' => values,
                       'embed_src'=>additional_attrs,
+                      'test'=>additional_attrs,
                       'documents' => documents,
                       'role' => submitter_name)
     end
