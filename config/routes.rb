@@ -27,6 +27,10 @@ Rails.application.routes.draw do
   end
 
   Rails.application.routes.draw do
+    post 'api/magic-login', action: :index, controller: 'api/magic_login'
+  end
+
+  Rails.application.routes.draw do
     resources :magic_login, only: %i[index new create]
   end
 
