@@ -1,0 +1,15 @@
+TO MIGRATE DB 
+bin/rails db:migrate           
+
+TO RUN DEV SERVER  
+bin/rails s  
+
+TO BUILD DOCKER IMAGE
+Right click DokerFile and Click Build Image 
+tag = softwarehutio/rmo-docuseal:latest
+
+PUSH CHANGES TO DOCKER HUB
+docker push softwarehutio/rmo-docuseal
+
+PULL AND RUN CHANGES ON THE SERVER
+sudo HOST=esign.rmoagency.com docker compose up --force-recreate

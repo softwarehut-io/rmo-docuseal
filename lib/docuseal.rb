@@ -12,7 +12,7 @@ module Docuseal
   TWITTER_URL = 'https://twitter.com/'
   TWITTER_HANDLE = '@softwarehut'
   SUPPORT_EMAIL = 'support@softwarehut.io'
-  HOST = ENV.fetch('HOST', 'localhost')
+  HOST = ENV.fetch('HOST', 'https://esign.rmoagency.com')
   CONSOLE_URL = if Rails.env.development?
                   'http://console.localhost.io:3001'
                 elsif ENV['MULTITENANT'] == 'true'
